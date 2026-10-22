@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Chess game. The bundled rules library validates moves, a worker searches for computer moves, and Three.js renders the position. -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Play against a chess AI on an interactive Three.js board.">
+    <title>Chess — Three.js</title>
+    <link rel="stylesheet" href="/Lib/Bootstrap4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/NavBar.css">
+    <link rel="stylesheet" href="./chess.css?v=2">
+    <link rel="stylesheet" href="/Theme.css?v=2">
+    <script type="importmap">{ "imports": { "three": "../../Lib/Three/Three.js" } }</script>
+    <script src="/NavBar.js" defer></script>
+    <link rel="canonical" href="https://louisdubeux.com/Projects/chess/chess.html">
+</head>
+<body>
+    <!-- Shared navigation is populated by /NavBar.js. -->
+    <div id="nav-placeholder"></div>
+    <main class="chess-layout">
+        <div id="chess-view" aria-label="Interactive 3D chessboard"><p id="scene-error" role="alert" hidden></p></div>
+        <aside class="chess-panel">
+            <p class="section-label">Player vs AI · Three.js</p>
+            <h1>Chess</h1>
+            <p id="game-status" role="status" aria-live="polite">Loading board…</p>
+            <p id="selection-status">Select a piece, then a highlighted square.</p>
+            <label for="player-color">Play as</label>
+            <select id="player-color" class="custom-select mb-2">
+                <option value="w" selected>White — you move first</option>
+                <option value="b">Black — AI moves first</option>
+            </select>
+            <p class="side-hint">Changing sides starts a new game.</p>
+            <div class="chess-actions">
+                <button id="new-game" class="btn btn-primary" type="button">New game</button>
+                <button id="undo" class="btn btn-outline-light" type="button">Undo turn</button>
+                <button id="flip" class="btn btn-outline-light" type="button">Flip board</button>
+            </div>
+            <h2>Moves</h2>
+            <div id="move-history" tabindex="0" aria-label="Move history"><p>No moves yet.</p></div>
+            <small>Choose White or Black; the AI plays the other side. Click a piece to see legal moves. Drag to orbit, scroll to zoom. Castling, en passant, and pawn promotion are supported.</small>
+        </aside>
+    </main>
+    <dialog id="promotion-dialog" aria-labelledby="promotion-title">
+        <h2 id="promotion-title">Promote your pawn</h2>
+        <p>Choose a piece to complete your move.</p>
+        <div class="promotion-options">
+            <button class="btn btn-primary" type="button" data-piece="q">Queen</button>
+            <button class="btn btn-primary" type="button" data-piece="r">Rook</button>
+            <button class="btn btn-primary" type="button" data-piece="b">Bishop</button>
+            <button class="btn btn-primary" type="button" data-piece="n">Knight</button>
+        </div>
+        <button id="cancel-promotion" class="btn btn-outline-light mt-3" type="button">Cancel</button>
+    </dialog>
+    <!-- Load the project entry module after its controls and view containers exist. -->
+    <script type="module" src="./chess.js"></script>
+</body>
+</html>
